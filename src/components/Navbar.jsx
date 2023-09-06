@@ -15,9 +15,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import UserData from './UserData';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+
+import UserTable from './UserTable';
 import { useState } from 'react';
 
 const drawerWidth = 240;
@@ -162,7 +163,7 @@ const Navbar=()=>{
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
               <DrawerHeader />
-              <UserData/>
+              <UserTable/>
             </Box>
           </Box>
         );
