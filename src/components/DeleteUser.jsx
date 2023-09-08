@@ -3,8 +3,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useSelector } from 'react-redux';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { useDispatch } from 'react-redux';
+import { removeUser } from '../features/userData/userDataSlice';
 
 const style = {
   position: 'absolute',
@@ -13,35 +14,20 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
   p: 4,
 };
 
-export default function EditUser() {
-
-
+const DeleteUser = ({userId})=> {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
 
-  const value = useSelector(state=>state.searchUser)
-
-  const handleEdit =()=>{
-    // console.log('hello');
-    console.log(value);
-  }
-
-  const sample = () => {
-    handleOpen()
-    handleEdit()
-  }
-
+  const dispatch = useDispatch();
 
   return (
     <div>
-      <Button style={{color: 'black'}} onClick={sample}><EditOutlinedIcon/></Button>
+      <Button style={{color: 'black'}} onClick={handleOpen}><DeleteOutlineOutlinedIcon/></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -50,13 +36,16 @@ export default function EditUser() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Delete the Advisor?
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Box sx={{display: 'flex',justifyContent: 'flex-end'}}>
+          <Button variant="text" style={{color: 'black'}}>Cancel</Button>
+          <Button variant="text" onClick={()=>dispatch(removeUser(userId))}>Delete</Button>
+          </Box>
         </Box>
       </Modal>
     </div>
   );
 }
+
+export default DeleteUser;
