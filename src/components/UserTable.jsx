@@ -218,7 +218,7 @@ const UserData = () => {
                       )}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="left">
-                      <EditUser />
+                      <EditUser user={row}/>
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="left">
                       <DeleteUser userId={row.id} />

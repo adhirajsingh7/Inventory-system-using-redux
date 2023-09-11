@@ -191,7 +191,7 @@ export default function CreateUser() {
                     onChange={handleStatus}
                   >
                     <MenuItem value={"Active"}>Active</MenuItem>
-                    <MenuItem value={"inactive"}>Inactive</MenuItem>
+                    <MenuItem value={"InActive"}>Inactive</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

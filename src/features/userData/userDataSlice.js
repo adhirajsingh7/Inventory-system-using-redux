@@ -33,10 +33,25 @@ const userDataSlice = createSlice({
         //     }
         // )
        
-        }
+        },
+
+        updateUser: (state,action)=> {
+            const updatedUser = action.payload
+            const modifiedRows = state.rows.map((row,key)=> {
+                if(row.id === updatedUser.id){
+                    return updatedUser;
+                }
+                else{
+                    return row;
+                }
+            })
+            state.rows = modifiedRows
+        },
+
+    
     }
 })
 
-export const{addUser ,removeUser,searchUser} = userDataSlice.actions
+export const{addUser ,removeUser,searchUser,updateUser} = userDataSlice.actions
 
 export default userDataSlice.reducer

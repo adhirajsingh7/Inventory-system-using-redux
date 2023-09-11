@@ -14,7 +14,7 @@ import Chip from "@mui/material/Chip";
 import { useState } from "react";
 import "../Styles/createUser.css";
 import { useDispatch ,useSelector } from "react-redux";
-import { addUser } from "../features/userData/userDataSlice";
+import {updateUser } from "../features/userData/userDataSlice";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 // Multiple chips-----------------------------------------------------------
@@ -57,8 +57,8 @@ const style = {
 
 
 
-export default function CreateUser() {
-
+export default function EditUser({user}) {
+  
   const dispatch = useDispatch()
   const rows = useSelector(state=>state.rows)
 
@@ -67,23 +67,16 @@ export default function CreateUser() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(user.status);
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
     setNewUser({...newUser, 'status' : e.target.value})
   };
 
-  const [newUser, setNewUser] = useState({
-    id: rows.length+1,
-    fname: "",
-    lname: "",
-    email: "",
-    status: "",
-    role: [],
-    institution: [],
-  });
+  const [newUser, setNewUser] = useState(user);
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
@@ -92,31 +85,19 @@ export default function CreateUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    dispatch(addUser(newUser))
+    dispatch(updateUser(newUser))
     
     console.log(newUser);
 
-    setNewUser({
-      id: rows.length+1,
-      fname: "",
-      lname: "",
-      email: "",
-      status: "",
-      role: [],
-      institution: [],
-    })
-
-    setStatus('')
-    setRole([])
-    setInstitute([])
+    handleClose()
 
   };
 
   //Multiple chips-------------------------------------------------------------------
 
   const theme = useTheme();
-  const [role, setRole] = useState([]);
-  const [institute, setInstitute] = useState([]);
+  const [role, setRole] = useState(user.role);
+  const [institute, setInstitute] = useState(user.institution);
 
   const handleRoleChange = (event) => {
     const {
@@ -150,7 +131,7 @@ export default function CreateUser() {
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Typography variant="h5">Create Advisor</Typography>
+          <Typography variant="h5">Update Advisor</Typography>
           <div className="formcontainer">
             <form className="createform">
               <div>
@@ -192,7 +173,7 @@ export default function CreateUser() {
                     onChange={handleStatus}
                   >
                     <MenuItem value={"Active"}>Active</MenuItem>
-                    <MenuItem value={"inactive"}>Inactive</MenuItem>
+                    <MenuItem value={"InActive"}>Inactive</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -271,7 +252,7 @@ export default function CreateUser() {
 
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button sx={{ color: "black" }} onClick={handleClose}>Cancel</Button>
-                <Button type="submit" onClick={handleSubmit}>Create</Button>
+                <Button type="submit" onClick={handleSubmit}>Update</Button>
               </Box>
             </form>
           </div>
