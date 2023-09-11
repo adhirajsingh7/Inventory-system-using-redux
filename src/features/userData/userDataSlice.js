@@ -1,5 +1,5 @@
 import { createSlice ,nanoid } from "@reduxjs/toolkit";
-import { columns, rows } from "../../data/Data";
+import {rows } from "../../data/Data";
 
 const initialState = {
     rows : rows,

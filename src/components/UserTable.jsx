@@ -17,14 +17,15 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 
 import { useSelector } from "react-redux";
 import CreateUser from "./CreateUser";
-import {Chip, TableHead, Typography,} from "@mui/material";
+import {Button, Chip, TableHead, Typography,} from "@mui/material";
 import { useEffect, useState } from "react";
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import "../Styles/UserTable.css";
 import EditUser from "./EditUser";
 import DeleteUser from "./DeleteUser";
 
 import SearchUser from "./SearchUser";
+import '../Styles/UserTable.css'
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -119,6 +120,10 @@ const UserData = () => {
   //             }))
   // },[searchUser])
 
+  const handleStatus=()=>{
+    console.log('Clicked status');
+  }
+
   
 
   const [page, setPage] = useState(0);
@@ -140,7 +145,7 @@ const UserData = () => {
   return (
     <>
       <div>
-        <div className="header-section" style={{marginTop: '5px'}}>
+        <div className="header-section" style={{margin: '15px'}}>
           <Typography className="header-section-heading" variant="h5">
             Advisors List
           </Typography>
@@ -149,13 +154,20 @@ const UserData = () => {
         </div>
 
         <div style={{ height: "85vh", width: "100%" }}>
-          <div>
-          <SearchUser/>
-          </div>
+          
 
           <TableContainer component={Paper}>
+          <div style={{padding: '10px'}}>
+          <SearchUser/>
+          <Chip style={{margin: '10px'}}
+        label="Status"
+        onDelete={handleStatus}
+        deleteIcon={<ArrowDropDownIcon />}
+      />
+      <Button style={{color: '#bdbdbd'}}>CLEAR</Button>
+          </div>
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-              <TableHead>
+              <TableHead className="table-heading">
                 <TableRow>
                   <TableCell>S.No</TableCell>
                   <TableCell align="left">Advisor Name</TableCell>
@@ -163,6 +175,8 @@ const UserData = () => {
                   <TableCell align="left">Institution</TableCell>
                   <TableCell align="left">Role</TableCell>
                   <TableCell align="left">Status</TableCell>
+                  <TableCell align="left"></TableCell>
+                  <TableCell align="left"></TableCell>
                 </TableRow>
               </TableHead>
 
@@ -179,16 +193,23 @@ const UserData = () => {
                       {row.id}
                     </TableCell>
                     <TableCell align="left">{row.fname.concat(' ',row.lname)} </TableCell>
-                    <TableCell style={{ width: 160 }} align="left">
+                    <TableCell style={{ width: 200 }} align="left">
                       {row.email}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="left">
-                      <Chip label={row.institution} />
+                    <TableCell style={{ width: 200 }} align="left">
+                    {
+                      
+                      row.institution.map((item ,key)=> <Chip key={key} label={item} /> )
+                    }
+
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="left">
-                      <Chip label={row.role} />
+                    <TableCell style={{ width: 200 }} align="left">
+                      {
+                        row.role.map((item,key)=> <Chip key={key} label={item} />)
+                      }
+
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="left">
+                    <TableCell style={{ width: 200 }} align="left">
                       {row.status == "Active" ? (
                         
                         <Chip variant="outlined" label="Active" sx={{backgroundColor: '#e8f5e9',color: '#2e7d32',borderColor: '#2e7d32'}} />
